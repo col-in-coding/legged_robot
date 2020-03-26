@@ -1,0 +1,325 @@
+#VRML_SIM R2020a utf8
+WorldInfo {
+  basicTimeStep 2
+}
+Viewpoint {
+  orientation -0.9154955788630315 -0.39972827816419004 0.04566342867257134 0.09634824714899502
+  position 0.11042366323426227 1.0463755684325455 5.539716879316943
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 6 9
+  floorTileSize 1.5 1.5
+  wallHeight 0.001
+}
+Robot {
+  translation 0 0.8 0
+  children [
+    DEF body Shape {
+      appearance PBRAppearance {
+        baseColorMap ImageTexture {
+          url [
+            "textures/water.jpg"
+          ]
+        }
+        metalness 0
+      }
+      geometry Cylinder {
+        height 0.1
+        radius 0.6
+      }
+      castShadows FALSE
+    }
+    Hinge2Joint {
+      jointParameters HingeJointParameters {
+      }
+      jointParameters2 JointParameters {
+      }
+      device [
+        RotationalMotor {
+          name "X rotational motor"
+          maxTorque 1000
+        }
+        PositionSensor {
+          name "X position sensor"
+        }
+      ]
+      device2 [
+        RotationalMotor {
+          name "Z rotational motor"
+          maxTorque 1000
+        }
+        PositionSensor {
+          name "Z position sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 2.7063622754764034e-13 0.00022956194274170732 -1.2420957273116862e-20
+        children [
+          DEF shaft Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 1
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.3
+              radius 0.05
+            }
+            castShadows FALSE
+          }
+          SliderJoint {
+            jointParameters JointParameters {
+              axis 0 1 0
+              minStop -0.4
+              dampingConstant 10
+              staticFriction 0.2
+            }
+            device [
+              LinearMotor {
+                maxForce 1600
+              }
+              PositionSensor {
+              }
+            ]
+            endPoint Solid {
+              children [
+                DEF leg Shape {
+                  appearance PBRAppearance {
+                    baseColor 1 1 0
+                    metalness 0
+                  }
+                  geometry Cylinder {
+                    height 1.58
+                    radius 0.02
+                  }
+                  castShadows FALSE
+                }
+                Transform {
+                  translation 0 -0.77 0
+                  children [
+                    DEF foot Shape {
+                      appearance PBRAppearance {
+                        baseColor 1 0 0
+                        metalness 0
+                      }
+                      geometry Sphere {
+                        radius 0.03
+                        subdivision 3
+                      }
+                      castShadows FALSE
+                    }
+                    TouchSensor {
+                      boundingObject USE foot
+                      physics Physics {
+                      }
+                    }
+                  ]
+                }
+              ]
+              boundingObject USE leg
+              physics Physics {
+                density -1
+                mass 1
+              }
+            }
+          }
+        ]
+        boundingObject USE shaft
+        physics Physics {
+          density -1
+          mass 0.1
+        }
+      }
+    }
+    InertialUnit {
+      boundingObject USE body
+      physics Physics {
+        density -1
+        mass 0.5
+      }
+    }
+  ]
+  boundingObject USE body
+  physics Physics {
+    density -1
+    mass 15
+  }
+  controller ""
+}
+Robot {
+  translation 0.04 0.89 2.22
+  children [
+    DEF BODY Shape {
+      appearance PBRAppearance {
+        baseColorMap ImageTexture {
+          url [
+            "textures/water.jpg"
+          ]
+        }
+        metalness 0
+      }
+      geometry Cylinder {
+        height 0.1
+        radius 0.6
+      }
+      castShadows FALSE
+    }
+    DEF HIP Hinge2Joint {
+      jointParameters HingeJointParameters {
+      }
+      jointParameters2 JointParameters {
+        position -0.5233
+      }
+      device [
+        RotationalMotor {
+          name "hipX rotational motor"
+          maxTorque 1000
+        }
+        PositionSensor {
+          name "hipX position sensor"
+        }
+      ]
+      device2 [
+        RotationalMotor {
+          name "hipZ rotational motor"
+          maxTorque 1000
+        }
+        PositionSensor {
+          name "hipZ position sensor"
+        }
+      ]
+      endPoint Solid {
+        rotation 0 0 -1 0.5233000000000004
+        children [
+          DEF KNEE HingeJoint {
+            jointParameters HingeJointParameters {
+              position 1.047
+              axis 0 0 1
+              anchor 0 -0.5 0
+            }
+            device [
+              PositionSensor {
+                name "knee position sensor"
+              }
+              RotationalMotor {
+                name "knee rotational motor"
+                maxTorque 1000
+              }
+            ]
+            endPoint Solid {
+              translation 0 -0.5 0
+              rotation 0 0 0.9999999999999999 1.0469999999999997
+              children [
+                DEF KNEE_JOINT Transform {
+                  rotation 1 0 0 1.5708
+                  children [
+                    Shape {
+                      appearance PBRAppearance {
+                        baseColor 0.533333 0.541176 0.521569
+                        metalness 0
+                      }
+                      geometry Cylinder {
+                        height 0.05
+                        radius 0.04
+                      }
+                      castShadows FALSE
+                    }
+                  ]
+                }
+                DEF FOOT_TRANS Transform {
+                  translation 0 -0.5 0
+                  children [
+                    DEF foot Shape {
+                      appearance PBRAppearance {
+                        baseColor 1 0 0
+                        metalness 0
+                      }
+                      geometry Sphere {
+                        radius 0.03
+                        subdivision 3
+                      }
+                      castShadows FALSE
+                    }
+                    TouchSensor {
+                      boundingObject USE foot
+                      physics Physics {
+                      }
+                    }
+                  ]
+                }
+                DEF CALF_TRANS Transform {
+                  translation 0 -0.25 0
+                  children [
+                    Shape {
+                      appearance PBRAppearance {
+                        baseColor 1 1 0
+                        metalness 0
+                      }
+                      geometry Cylinder {
+                        height 0.5
+                        radius 0.02
+                      }
+                    }
+                  ]
+                }
+              ]
+              boundingObject USE CALF_TRANS
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+            }
+          }
+          DEF THIGH_TRANS Transform {
+            translation 0 -0.25 0
+            children [
+              DEF LEG Shape {
+                appearance PBRAppearance {
+                  baseColor 1 1 0
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.5
+                  radius 0.02
+                }
+                castShadows FALSE
+              }
+            ]
+          }
+          DEF HIP Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 1
+              metalness 0
+            }
+            geometry Sphere {
+              radius 0.1
+            }
+            castShadows FALSE
+          }
+        ]
+        boundingObject USE HIP
+        physics Physics {
+          density -1
+          mass 0.1
+        }
+      }
+    }
+    InertialUnit {
+      boundingObject USE BODY
+      physics Physics {
+        density -1
+        mass 0.5
+      }
+    }
+  ]
+  name "single_3Rleg_robot"
+  boundingObject USE BODY
+  physics Physics {
+    density -1
+    mass 15
+  }
+  controller "single_3R_leg_hopping"
+}
